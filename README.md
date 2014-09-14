@@ -13,9 +13,9 @@ copy the src folder from github
 first of all we will need to load  some scripts 
 
 <code>
-<script src="yourpath/src/jquery-1.10.2.min.js"></script>
-<script src="yourpath/src/history.js"></script>
-<script src="yourpath/src/helper.js"></script>
-<script src="yourpath/src/myrouts.js"></script>
-<script src="yourpath/src/yourwayjs.js"></script>
+src="yourpath/src/jquery-1.10.2.min.js"
+src="yourpath/src/history.js"
+src="yourpath/src/helper.js"
+src="yourpath/src/myrouts.js"
+src="yourpath/src/yourwayjs.js"
 </code>
