@@ -171,3 +171,79 @@ manually delete all the registerted plugins
 yourwayjs.deletePlugins()
 ```
 
+<h2>myrouts</h2>
+myroutes is where you put your application logic for each page
+
+exsample for a router
+```
+var myRouts = {
+
+		
+
+		"home":{
+			route:function(response){
+				
+				$(".contentt").html(response)
+			},
+			error:function(textStatus,errorThrown){
+				
+			},
+			settings:function(){
+
+			}
+		},
+
+		"page2":{
+			route:function(response){
+				
+				$(".contentt").html(response)
+				$("#adaa").click(function(){
+					console.log(3);
+				});
+			},
+			error:function(textStatus,errorThrown){
+				
+			},
+			settings:function(){
+
+			}
+		},
+
+		"page3":{
+			route:function(response){
+				$(".contentt").html(myRouts.params.response)
+				$("#ada").click(function(){
+					console.log(2);
+				});
+			},
+			error:function(textStatus,errorThrown){
+				
+			},
+			settings:function(){
+
+			}
+		},
+
+		"default":{
+			route:function(response){
+				$(".contentt").html(response)
+			},
+			error:function(textStatus,errorThrown){
+				
+			},
+		}
+	
+
+		
+	}
+```
+
+lets review what we have here.
+on the first level we put the page name and create and object for it with the following attributs
+route:this function called after we get the respone for the server (u must declare a route function for each page you declare)
+error:when ever we got an error from the server will come to this function( if this function is not declared it will go to the default error function)
+settings:if you wanna do things just before the ajax request happens declare this function (this is a good place to use the
+yourwayjs.setOneTimeAjaxParams(object) function )
+
+you olso must declare a default attribute in your object. whenever the router go to a page that is not declared in your object or the page doesnt have an error function it will go to the default function
+
