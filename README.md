@@ -7,7 +7,7 @@ for exsample - many times we build small websites with low trafic and we preffer
 in Yourwayjs you chose how things will happen without almost any restrictions
 
 <h1>Download</h1>
-copy the src folder from github
+press the download zip on the right corenr(:
 
 <h1>Getting started</h1>
 first of all we will need to load  some scripts 
