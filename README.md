@@ -171,7 +171,7 @@ manually delete all the registerted plugins
 yourwayjs.deletePlugins()
 ```
 
-<h2>myrouts</h2>
+<h1>myrouts</h1>
 myroutes is where you put your application logic for each page
 
 exsample for a router
