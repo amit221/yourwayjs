@@ -6,10 +6,10 @@ Yourwayjs is an lightwight js library that make your website into  a webapp ,  w
 for exsample - many times we build small websites with low trafic and we preffer to build the hole application on the server time to save time. in today populr framworks they tell you to seprate between the server and the client side .  
 in Yourwayjs you chose how things will happen without almost any restrictions
 
-<h2>Download</h2>
+<h1>Download</h1>
 copy the src folder from github
 
-<h2>Getting started</h2>
+<h1>Getting started</h1>
 first of all we will need to load  some scripts 
 
 ```
@@ -50,7 +50,7 @@ ajax_req:'yourwayjs'
 ```
 this way you can check on the server if its a yourwayjs request or a normal request.
 
-<h2>API</h2>
+<h1>API</h1>
 
 so lets do a quick overview on what we can do with our functions
 
