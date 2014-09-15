@@ -54,6 +54,60 @@ this way you can check on the server if its a yourwayjs request or a normal requ
 
 so lets do a quick overview on what we can do with our functions
 
+<h3>router</h3>
+use this function if you want to route to url manually
+
+```
+yourwayjs.router(url);
+```
+
+<h3>errors</h3>
+check if a variable meats your requirments and throw error id not(good for debug)
+
+```
+yourwayjs.error(variable,Array(arg))
+```
+
+posiable arguments:
+```
+string 	 : check if the variable is a string
+undefined: check if the variable is a undefined
+required : check if the variable is a is emptey (works for array and strings)
+array    : check if the variable is array
+object	 : check if the variable is object
+global	 : check if the variable is global variable
+```
+
+<h3>getUrl</h3>
+returns the currnt path after the host name without paramters that comes after ?
+
+```
+yourwayjs.getUrl()
+```
+
+exsample:
+for this url "http://mywebsite.com/projects/project1?p=1&p2=2"
+the function will return "projects/project1"
+
+<h3>getPage</h3>
+return the current page 
+
+```
+yourwayjs.getPage()
+```
+
+exsample:
+for this url "http://mywebsite.com/projects/project1?p=1&p2=2"
+the function will return "projects"
+
+<h3>setOneTimeAjaxParams</h3>
+in your router object you might wanna change the ajax options . use this function in the router page settings to do so
+
+```
+yourwayjs.setOneTimeAjaxParams(object);
+```
+
+
 <h3>on</h3>
 use this function when you want do add an on event on a selctor outside the main container  that will work only on the current page
 
@@ -116,3 +170,4 @@ manually delete all the registerted plugins
 ```
 yourwayjs.deletePlugins()
 ```
+
