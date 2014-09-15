@@ -61,14 +61,14 @@ use this function when you want do add an on event on a selctor outside the main
 yourwayjs.on(jquery selector,event,func)
 ```
 
-<h3>off<h3>
+<h3>off</h3>
 use this function when you want manually off an event
 
 ```
 yourwayjs.off(jquery selector)
 ```
 
-<h3>bind<h3>
+<h3>bind</h3>
 use this function when you want do add an bind event on a selctor outside the main container  that will work only on the current page
 
 
@@ -76,20 +76,20 @@ use this function when you want do add an bind event on a selctor outside the ma
 yourwayjs.bind(jquery selector,event,func)
 ```
 
-<h3>unbind<h3>
+<h3>unbind</h3>
 use this function when you want manually unbind an event
 
 ```
 yourwayjs.unbind(jquery selector)
 ```
-<h3>addGlobals<h3>
+<h3>addGlobals</h3>
 adding a global variable that will live only on the current page
 
 ```
 yourwayjs.addGlobals(name,value)
 ```
 
-<h3>removeGlobals<h3>
+<h3>removeGlobals</h3>
 manually remove all the global variables that you define with addGlobals
 (this methoed is called  before any routing to other page )
 
@@ -97,7 +97,7 @@ manually remove all the global variables that you define with addGlobals
 yourwayjs.removeGlobals()
 ```
 
-<h3>addPlugin<h3>
+<h3>addPlugin</h3>
 register the plugin destory method 
 
 ```
@@ -109,7 +109,7 @@ exsample :
 yourwayjs.addPlugin(function(){$( "selctor" ).draggable("destroy");})
 ```
 
-<h3>deletePlugins<h3>
+<h3>deletePlugins</h3>
 manually delete all the registerted plugins
 (this methoed is called  before any routing to other page )
 
