@@ -26,16 +26,15 @@ first lets create our app
 
 ```
 new yourwayjs({
-      url:http://mywebsite.com ,			// the base url of your webstie (requierd)
-      routs: myRouts,			            // this is your routing logic . (requierd)
-      container:"",			              // a jquery selctor for the main container of the page (requierd)
+	url:http://mywebsite.com ,	// the base url of your webstie (requierd)
+	routs: myRouts,			// this is your routing logic . (requierd)
+	container:"",			// a jquery selctor for the main container of the page (requierd)
       
-			onload:function(){} ,		        // your own function when the plugin is finish to init,
-			startWithRout:true, 		        // after init call the page that requested
-			startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
-			stopPageSwitch:function(){},	  // user function that happen after the page was renderd
-		
-			defaultAjaxParams:{}            // your defult ajax params for every request
+	onload:function(){} ,		// your own function when the plugin is finish to init,
+	startWithRout:true, 		// after init call the page that requested
+	startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
+	stopPageSwitch:function(){},	// user function that happen after the page was renderd
+	defaultAjaxParams:{}            // your defult ajax params for every request
 
 });
 
