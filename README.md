@@ -54,7 +54,7 @@ this way you can check on the server if its a yourwayjs request or a normal requ
 
 so lets do a quick overview on what we can do with our functions
 
-<h3>on<h3>
+<h3>on</h3>
 use this function when you want do add an on event on a selctor outside the main container  that will work only on the current page
 
 ```
