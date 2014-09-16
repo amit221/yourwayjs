@@ -185,7 +185,7 @@ var myRouts = {
 				
 				$(".contentt").html(response)
 			},
-			error:function(textStatus,errorThrown){
+			error:function(jqXHR,textStatus,errorThrown){
 				
 			},
 			settings:function(){
@@ -201,7 +201,7 @@ var myRouts = {
 					console.log(3);
 				});
 			},
-			error:function(textStatus,errorThrown){
+			error:function(jqXHR,textStatus,errorThrown){
 				
 			},
 			settings:function(){
@@ -216,7 +216,7 @@ var myRouts = {
 					console.log(2);
 				});
 			},
-			error:function(textStatus,errorThrown){
+			error:function(jqXHR,textStatus,errorThrown){
 				
 			},
 			settings:function(){
@@ -228,7 +228,7 @@ var myRouts = {
 			route:function(response){
 				$(".contentt").html(response)
 			},
-			error:function(textStatus,errorThrown){
+			error:function(jqXHR,textStatus,errorThrown){
 				
 			},
 		}
