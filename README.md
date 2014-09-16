@@ -34,7 +34,8 @@ new yourwayjs({
 	startWithRout:true, 		// after init call the page that requested
 	startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
 	stopPageSwitch:function(){},	// user function that happen after the page was renderd
-	defaultAjaxParams:{}            // your defult ajax params for every request
+	defaultAjaxParams:{} ,          // your defult ajax params for every request
+	delay:0,			//set the delay time if use animation in startPageSwitch  and stopPageSwitch
 
 });
 
