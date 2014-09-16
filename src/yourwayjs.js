@@ -236,7 +236,7 @@
 				  	$(this).removeNative();
 				  });
 
-				 if(typeof (yourwayjsOptions.routs[_instance.getPage()]) && typeof (yourwayjsOptions.routs[_instance.getPage()].route) == "function"){
+				 if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].route) == "function"){
 				 	yourwayjsOptions.routs[_instance.getPage()].route(data);
 				 }else{
 				 	yourwayjsOptions.routs['default'].route(data);
@@ -248,7 +248,7 @@
 			  jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
 
 			 
-				  if(typeof (yourwayjsOptions.routs[_instance.getPage()]) && typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
+				  if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
 				 	yourwayjsOptions.routs[_instance.getPage()].error(textStatus,errorThrown);
 				 }else{
 				 	yourwayjsOptions.routs['default'].error(textStatus,errorThrown);
