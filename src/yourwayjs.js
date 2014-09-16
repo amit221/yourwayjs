@@ -15,24 +15,25 @@
 		/*yourwayjs variables*/
 	/*****************************/
 	var yourwayjsOptions = {
-			url:null ,			// the base url of your webstie (requierd)
+			url:null ,					// the base url of your webstie (requierd)
 			onload:function(){} ,		// your own function when the plugin is finish to init,
-			container:"",			// a jquery selctor for the main container of the page (requierd)
+			container:"",				// a jquery selctor for the main container of the page (requierd)
 			startWithRout:true, 		// after init call the page that requested
 			startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
 			stopPageSwitch:function(){},	// user function that happen after the page was renderd
-			routs: null,			// this is your routing logic . (requierd)
-			defaultAjaxParams:{}   	// your defult ajax params for every request
+			routs: null,				// this is your routing logic . (requierd)
+			defaultAjaxParams:{},   	// your defult ajax params for every request
+			delay:0,					//set the delay time if use animation in startPageSwitch  and stopPageSwitch
 	};
 	var current_url		= "";
 	var _instance   	= null;
-	var pages        		= {};
+	var pages        	= {};
 	var onEvents		= [];
 	var bindEvents 		= [];
 	var globalVars		= [];
-	var plugins      		= [];
+	var plugins      	= [];
 	var request 		= {method:'get',data:{}}; 
-	var page  		= ""; 
+	var page  			= ""; 
 	var oneTimeAjaxParams = {};
 
 	/*****************************/
@@ -63,7 +64,14 @@
 				convertToAjax();
 			
 				if(yourwayjsOptions.startWithRout){
-					_instance.router(yourwayjsOptions.url+"/"+_instance.getUrl())
+					var url = "";
+					if(yourwayjsOptions.url.slice(-1)  == "/")
+						url = yourwayjsOptions.url  + _instance.getUrl();
+					else{
+						url = yourwayjsOptions.url+"/"+_instance.getUrl();
+					}
+					
+					_instance.router(url)
 				}
 
 			    	yourwayjsOptions.onload();
@@ -131,7 +139,12 @@
 		var setCurrentUrl = function(){
 			current_url = window.location.href;
 			current_url = current_url.replace(/#[^#]*$/, "").replace(/\?[^\?]*$/, "").replace(/^https:/, "http:").replace(yourwayjsOptions.url, "");
-			page 	     = current_url.indexOf("/") > -1 ?  current_url.substr(0,current_url.indexOf("/")) : current_url;
+			
+			if(current_url.slice(-1) == "/"){
+				current_url = current_url.substr(0,current_url.lastIndexOf("/"));
+			}
+			
+			page 		= current_url.indexOf("/") > -1 ?  current_url.substr(0,current_url.indexOf("/")) : current_url;
 
 		};
 		
@@ -227,41 +240,56 @@
 			 yourwayjsOptions.startPageSwitch();
 			
 			
-			 
-			  jqxhr.done(function(data) {	
-			 
-				  $(yourwayjsOptions.container+" *").each(function(){ 
-				  	$(this).off() ;
-				  	$(this).unbind();
-				  	$(this).removeNative();
-				  });
+				var ajaxTime= new Date().getTime();
+				 
+				  jqxhr.done(function(data) {	
+				  var totalTime = new Date().getTime()-ajaxTime;
+				 
+				  var d = totalTime >=  yourwayjsOptions.delay ? 0 : yourwayjsOptions.delay - totalTime;
+				  
+				  window.setTimeout(function(){
+					  $(yourwayjsOptions.container+" *").each(function(){ 
+						  	$(this).off() ;
+						  	$(this).unbind();
+						  	$(this).removeNative();
+						  });
 
-				 if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].route) == "function"){
-				 	yourwayjsOptions.routs[_instance.getPage()].route(data);
-				 }else{
-				 	yourwayjsOptions.routs['default'].route(data);
-				 }
+						 if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].route) == "function"){
+						 	yourwayjsOptions.routs[_instance.getPage()].route(data);
+						 }else{
+						 	yourwayjsOptions.routs['default'].route(data);
+						 }
+						 yourwayjsOptions.stopPageSwitch();
+				  },d);
+			
 
 				 oneTimeAjaxParams = {};
-				 yourwayjsOptions.stopPageSwitch();
+				
 			  });
 			  jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
-
-			 
-				  if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
-				 	yourwayjsOptions.routs[_instance.getPage()].error(jqXHR,textStatus,errorThrown);
-				 }else{
-				 	yourwayjsOptions.routs['default'].error(jqXHR,textStatus,errorThrown);
-				 }
-				 
+				  var totalTime = new Date().getTime()-ajaxTime;
+				  var d = totalTime >=  yourwayjsOptions.delay ? 0 : yourwayjsOptions.delay - totalTime;
+				  window.setTimeout(function(){
+					  $(yourwayjsOptions.container+" *").each(function(){ 
+						  	$(this).off() ;
+						  	$(this).unbind();
+						  	$(this).removeNative();
+						  });
+					  if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
+						  yourwayjsOptions.routs[_instance.getPage()].error(jqXHR,textStatus,errorThrown);
+					  }else{
+						  yourwayjsOptions.routs['default'].error(jqXHR,textStatus,errorThrown);
+					  }
+					  yourwayjsOptions.stopPageSwitch();
+				  },d)
 			  	oneTimeAjaxParams = {};
-				yourwayjsOptions.stopPageSwitch();
+				
 			  });
 			  return false;
 		};
 		
 		this.addPage = function(){
-			_instance.errors(current_url,Array('string','required')); 
+			_instance.errors(current_url,Array('string')); 
 			pages[current_url] = {};
 			
 		};
@@ -349,6 +377,9 @@
 */
 		this.setOneTimeAjaxParams = function(obj){
 			_instance.oneTimeAjaxParams = obj;
+		}
+		this.setDelay = function(d){
+			delay = d;
 		}
 
 		 
