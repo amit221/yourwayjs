@@ -5,9 +5,10 @@
  * Copyright (c) 2014  Amit Wagner
  *
  *
- * Requires jQuery v1.7.2+ , history.js , helper.js , jquery.touch
+ * Requires jQuery v1.7.2+ , history.js , helper.js 
  *
  */
+
 
 (function( $, window, document, undefined ) {
 	
@@ -20,7 +21,8 @@
 			startWithRout:true, 		// after init call the page that requested
 			startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
 			stopPageSwitch:function(){},	// user function that happen after the page was renderd
-			routs: null			// this is your routing logic . (requierd)
+			routs: null,			// this is your routing logic . (requierd)
+			defaultAjaxParams:{}   	// your defult ajax params for every request
 	};
 	var current_url		= "";
 	var _instance   	= null;
@@ -31,7 +33,6 @@
 	var plugins      		= [];
 	var request 		= {method:'get',data:{}}; 
 	var page  		= ""; 
-	var defualtAjaxParams = {};
 	var oneTimeAjaxParams = {};
 
 	/*****************************/
@@ -53,11 +54,11 @@
 				throw "you must set a main container for your app"
 			}
 			
-			setCurrentUrl();
-			thisClient.addPage();
-			
+			setCurrentUrl();	
 			if ( _instance === null ) {
+
 				_instance = thisClient;
+				thisClient.addPage();
 				History.Adapter.bind(window,'statechange',function(){thisClient.router();} );
 				convertToAjax();
 			
@@ -68,25 +69,11 @@
 			    	yourwayjsOptions.onload();
 
 			}
-		};
-		
-		
-		
-		var serverErrors = function(error){
-			var logedOut = "1000";
-			var serverError = "1001";
 			
-				switch (error){
-					case logedOut :
-						window.location.reload();
-						return true;
-					break;
-					case serverError :
-						return true;
-					break;
-				}
-			return false;
 		};
+		
+		
+		
 		
 		var convertToAjax = function(){
 			handleAtags();
@@ -145,6 +132,7 @@
 			current_url = window.location.href;
 			current_url = current_url.replace(/#[^#]*$/, "").replace(/\?[^\?]*$/, "").replace(/^https:/, "http:").replace(yourwayjsOptions.url, "");
 			page 	     = current_url.indexOf("/") > -1 ?  current_url.substr(0,current_url.indexOf("/")) : current_url;
+
 		};
 		
 		var removePage = function(){
@@ -162,12 +150,11 @@
 			
 		};
 		
-		var defualtRequest = function(){
+		var defaultRequest = function(){
 			request = {method:'get',data:{}};
 		};
 		
 		/* PUBLIC FUNCTION */
-
 		this.errors = function(variable,arg){
 			
 			for(var index in arg){
@@ -211,7 +198,17 @@
 
 		this.router = function(url){
 			
+
+			 removePage();
+			 setCurrentUrl();
+			 _instance.addPage();
+
+ 			if(typeof (yourwayjsOptions.routs[_instance.getPage()].settings) == "function" ){
+ 				yourwayjsOptions.routs[_instance.getPage()].settings()
+ 			}; 
+
 			 var State = typeof(url) !== "undefined" ? {hashedUrl:url}:  History.getState();
+			 request.data = $.extend({},request.data,{ajax_req:'yourwayjs'})
 			 var ajaxOptions = {
 			 	  type: request.method,
 				  url: State.hashedUrl,
@@ -220,23 +217,18 @@
 
 			if(!$.isEmptyObject(oneTimeAjaxParams)){
 				ajaxOptions =  $.extend( {},ajaxOptions, oneTimeAjaxParams );
-			}else if(!$.isEmptyObject(defualtAjaxParams)){
-				ajaxOptions =  $.extend( {},ajaxOptions, defualtAjaxParams );
+			}else if(!$.isEmptyObject(yourwayjsOptions.defaultAjaxParams)){
+				ajaxOptions =  $.extend( {},ajaxOptions, yourwayjsOptions.defaultAjaxParams );
 			}
 			yourwayjsOptions = $.extend( {},yourwayjsOptions, options );
 			 var jqxhr = $.ajax(ajaxOptions); 
 			 
-			 defualtRequest(); 
+			 defaultRequest(); 
 			 yourwayjsOptions.startPageSwitch();
 			
-			 removePage();
-			 setCurrentUrl();
-			 _instance.addPage();
+			
 			 
-			  jqxhr.done(function(data) {
-				  if(serverErrors($.trim(data))){
-					  return true;
-				  }
+			  jqxhr.done(function(data) {	
 			 
 				  $(yourwayjsOptions.container+" *").each(function(){ 
 				  	$(this).off() ;
@@ -244,28 +236,23 @@
 				  	$(this).removeNative();
 				  });
 
-				 //$(yourwayjsOptions.container).html(data);
-
-				 yourwayjsOptions.routs.params = {
-				 	page:_instance.getPage(),
-				 	response:data
-				 }; 
-				 yourwayjsOptions.routs.route(); 
+				 if(typeof (yourwayjsOptions.routs[_instance.getPage()].route) == "function"){
+				 	yourwayjsOptions.routs[_instance.getPage()].route(data);
+				 }else{
+				 	yourwayjsOptions.routs['default'].route(data);
+				 }
 
 				 oneTimeAjaxParams = {};
 				 yourwayjsOptions.stopPageSwitch();
 			  });
 			  jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
 
-			  	 yourwayjsOptions.routs.params = {
-				 	page:_instance.getPage(),
-				 	response:{
-				 		textStatus:textStatus,
-				 		errorThrown:errorThrown
-				 	}
-				 	
-				 }; 
-				 yourwayjsOptions.routs.routeError(); 
+			 
+				  if(typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
+				 	yourwayjsOptions.routs[_instance.getPage()].error(textStatus,errorThrown);
+				 }else{
+				 	yourwayjsOptions.routs['default'].error(textStatus,errorThrown);
+				 }
 				 
 			  	oneTimeAjaxParams = {};
 				yourwayjsOptions.stopPageSwitch();
@@ -281,10 +268,10 @@
 		
 		this.on = function(selector,event,func){
 			if(selector instanceof jQuery){
-				selector.on(event,function(){func;});
+				selector.on(event,function(){func();});
 			}
 			else{
-				$(selector).on(event,function(){func;});
+				$(selector).on(event,function(){func();});
 			}
 			onEvents.push(selector);
 		};
@@ -300,10 +287,10 @@
 		
 		this.bind = function(selector,event,func){
 			if(selector instanceof jQuery){
-				selector.bind(event,function(){func;});
+				selector.bind(event,function(){func();});
 			}
 			else{
-				$(selector).bind(event,function(){func;});
+				$(selector).bind(event,function(){func();});
 			}
 			bindEvents.push(selector);
 			 
@@ -354,23 +341,28 @@
 		this.getPage = function(){
 			return page;
 		}
-
-		this.setDefualtAjaxParams = function(obj){
-			_instance.defualtAjaxParams = obj;
+/*
+		this.setyourwayjsOptions = function(obj){
+			yourwayjsOptions.defaultAjaxParams = obj;
 		
 		}
-
+*/
 		this.setOneTimeAjaxParams = function(obj){
 			_instance.oneTimeAjaxParams = obj;
 		}
 
 		 
 		constructor(options,this);
+		window['yourwayjs'] = _instance;
 		return _instance;
 		
-		
 	};
-	
+
+	if ( typeof define === "function" && define.amd ) {
+		define( "yourwayjs", [], function() {
+			return yourwayjs;
+		});
+	}
+      	
 	
 })( jQuery, window, document );
-
