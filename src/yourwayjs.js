@@ -249,9 +249,9 @@
 
 			 
 				  if(typeof (yourwayjsOptions.routs[_instance.getPage()]) !== 'undefined' && typeof (yourwayjsOptions.routs[_instance.getPage()].error) == "function"){
-				 	yourwayjsOptions.routs[_instance.getPage()].error(textStatus,errorThrown);
+				 	yourwayjsOptions.routs[_instance.getPage()].error(jqXHR,textStatus,errorThrown);
 				 }else{
-				 	yourwayjsOptions.routs['default'].error(textStatus,errorThrown);
+				 	yourwayjsOptions.routs['default'].error(jqXHR,textStatus,errorThrown);
 				 }
 				 
 			  	oneTimeAjaxParams = {};
