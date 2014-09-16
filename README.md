@@ -26,7 +26,7 @@ first lets create our app
 
 ```
 new yourwayjs({
-	url:http://mywebsite.com ,	// the base url of your webstie (requierd)
+	url:"http://mywebsite.com" ,	// the base url of your webstie (requierd)
 	routs: myRouts,			// this is your routing logic . (requierd)
 	container:"",			// a jquery selctor for the main container of the page (requierd)
       
