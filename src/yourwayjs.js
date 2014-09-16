@@ -143,6 +143,9 @@
 			if(current_url.slice(-1) == "/"){
 				current_url = current_url.substr(0,current_url.lastIndexOf("/"));
 			}
+			if(current_url.indexOf("/") == 0){
+				current_url = current_url.substr(1);
+			}
 			
 			page 		= current_url.indexOf("/") > -1 ?  current_url.substr(0,current_url.indexOf("/")) : current_url;
 
