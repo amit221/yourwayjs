@@ -63,24 +63,24 @@
 				History.Adapter.bind(window,'statechange',function(){thisClient.router();} );
 				convertToAjax();
 			
-				if(yourwayjsOptions.startWithRout){
-					var url = "";
-					if(yourwayjsOptions.url.slice(-1)  == "/")
-						url = yourwayjsOptions.url  + _instance.getUrl();
-					else{
-						url = yourwayjsOptions.url+"/"+_instance.getUrl();
-					}
-					
-					_instance.router(url)
-				}
-
-			    	yourwayjsOptions.onload();
+				yourwayjsOptions.onload();
 
 			}
 			
 		};
 		
-		
+		var startRoute = function(){
+			if(yourwayjsOptions.startWithRout){
+				var url = "";
+				if(yourwayjsOptions.url.slice(-1)  == "/")
+					url = yourwayjsOptions.url  + _instance.getUrl();
+				else{
+					url = yourwayjsOptions.url+"/"+_instance.getUrl();
+				}
+				
+				_instance.router(url)
+			}
+		}
 		
 		
 		var convertToAjax = function(){
@@ -388,6 +388,7 @@
 		 
 		constructor(options,this);
 		window['yourwayjs'] = _instance;
+		startRoute();
 		return _instance;
 		
 	};
