@@ -2,8 +2,8 @@
  * yourwayjs Plugin Beta version
  * 
  *
- * Copyright (c) 2014  Amit Wagner
- *
+ * Copyright (c) 2014  Amit Wagner 
+ * https://github.com/amit221/yourwayjs
  *
  * Requires jQuery v1.7.2+ , history.js , helper.js 
  *
@@ -27,14 +27,15 @@
 	};
 	var current_url		= "";
 	var _instance   	= null;
-	var pages        	= {};
+	var pages        		= {};
 	var onEvents		= [];
 	var bindEvents 		= [];
 	var globalVars		= [];
-	var plugins      	= [];
+	var plugins      		= [];
 	var request 		= {method:'get',data:{}}; 
-	var page  			= ""; 
+	var page  		= ""; 
 	var oneTimeAjaxParams = {};
+	var noAnimation 	= false;
 
 	/*****************************/
 	
@@ -103,7 +104,7 @@
 				}
 				  var path = $a.attr('href');
 				 if(current_url != path.replace(yourwayjsOptions.url,'')){
-					 History.pushState(null, null, path);
+					 History.pushState(null, new Date().getTime(), path);
 				 }
 				 else{
 					 _instance.router(path);
@@ -124,13 +125,17 @@
 				var path = $form.attr('action');
 				request.method = $form.attr('method') !== undefined ? $form.attr('method') : request.method;
 				request.data = $form.serializeObject();
-				
-				if(path ===  undefined || path == yourwayjsOptions.url+current_url ){
-					path = yourwayjsOptions.url+current_url;
+				if(path === undefined){
+					path = current_url;
+				}
+				/*
+				if(path ===  undefined || path == yourwayjsOptions.url+"/"+current_url ){
+					path = yourwayjsOptions.url+"/"+current_url;
 					_instance.router(path);
 				} 
+				*/
 				
-				History.pushState(null, null, path);
+				History.pushState(null, new Date().getTime(), path);
 				event.preventDefault();
 				return false;
 			});
@@ -213,7 +218,12 @@
 
 
 		this.router = function(url){
-			
+			if(typeof(url) !== "undefined"){
+				var path=url;
+				History.pushState(null, new Date().getTime(), path);
+				return;
+			}
+				
 
 			 removePage();
 			 setCurrentUrl();
@@ -240,8 +250,9 @@
 			 var jqxhr = $.ajax(ajaxOptions); 
 			 
 			 defaultRequest(); 
-			 yourwayjsOptions.startPageSwitch();
-			
+			 if(noAnimation == false){
+			 	yourwayjsOptions.startPageSwitch();
+			}
 			
 				var ajaxTime= new Date().getTime();
 				 
@@ -249,7 +260,9 @@
 				  var totalTime = new Date().getTime()-ajaxTime;
 				 
 				  var d = totalTime >=  yourwayjsOptions.delay ? 0 : yourwayjsOptions.delay - totalTime;
-				  
+				   if(noAnimation == true){
+				   	d  = 0;
+				   }
 				  window.setTimeout(function(){
 					  $(yourwayjsOptions.container+" *").each(function(){ 
 						  	$(this).off() ;
@@ -262,16 +275,22 @@
 						 }else{
 						 	yourwayjsOptions.routs['default'].route(data);
 						 }
-						 yourwayjsOptions.stopPageSwitch();
+						 if(noAnimation == false){
+						 	yourwayjsOptions.stopPageSwitch();
+						}
 				  },d);
 			
 
 				 oneTimeAjaxParams = {};
+				 noAnimation = false;
 				
 			  });
 			  jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
 				  var totalTime = new Date().getTime()-ajaxTime;
 				  var d = totalTime >=  yourwayjsOptions.delay ? 0 : yourwayjsOptions.delay - totalTime;
+				    if(noAnimation == true){
+				   	d  = 0;
+				   }
 				  window.setTimeout(function(){
 					  $(yourwayjsOptions.container+" *").each(function(){ 
 						  	$(this).off() ;
@@ -283,9 +302,12 @@
 					  }else{
 						  yourwayjsOptions.routs['default'].error(jqXHR,textStatus,errorThrown);
 					  }
-					  yourwayjsOptions.stopPageSwitch();
+					  if(noAnimation == false){
+						 	yourwayjsOptions.stopPageSwitch();
+					}
 				  },d)
 			  	oneTimeAjaxParams = {};
+			  	noAnimation = false;
 				
 			  });
 			  return false;
@@ -381,8 +403,13 @@
 		this.setOneTimeAjaxParams = function(obj){
 			_instance.oneTimeAjaxParams = obj;
 		}
+
 		this.setDelay = function(d){
 			delay = d;
+		}
+
+		this.noAnimation = function(){
+			noAnimation = true;
 		}
 
 		 
