@@ -101,6 +101,15 @@ exsample:
 for this url "http://mywebsite.com/projects/project1?p=1&p2=2"
 the function will return "projects"
 
+
+<h3>noAnimation</h3>
+if you want to diable page animation for a page call this function
+
+```
+yourwayjs.noAnimation();
+```
+
+
 <h3>setOneTimeAjaxParams</h3>
 in your router object you might wanna change the ajax options . use this function in the router page settings to do so
 
