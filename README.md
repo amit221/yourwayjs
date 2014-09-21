@@ -10,7 +10,7 @@ in Yourwayjs you chose how things will happen without almost any restrictions
 press the download zip on the right corner(:
 
 <h1>demo</h1>
-http://yourwayjs.pops.co.il/
+<a href="http://yourwayjs.pops.co.il/" target='_blank' >live demo</a>
 
 <h1>Getting started</h1>
 first of all we will need to load  some scripts 
