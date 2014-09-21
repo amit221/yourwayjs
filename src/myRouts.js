@@ -12,60 +12,58 @@
 
 (function( $, window, document, undefined ) {
 	
+
 	var myRouts = {
 
 		
-
-		"index.php":{
+		"server_page":{
 			route:function(response){
 				
-				$(".contentt").html(response)
+				$("#main_content").html(response)
+			},
+			
+		},
+		"":{
+			route:function(response){
+				
+				myRouts.server_page.route(response);
+			},
+			
+		},
+
+		"working_with_json":{
+			route:function(response){
+				
+				var page = new working_with_json(response);
+				$("#main_content").html( page.render());
 			},
 			error:function(textStatus,errorThrown){
 				
 			},
 			settings:function(){
-
+				yourwayjs.setOneTimeAjaxParams({
+					dataType:"json"
+				});
 			}
 		},
 
-		"page2.php":{
+		"form":{
 			route:function(response){
 				
-				$(".contentt").html(response)
-				$("#adaa").click(function(){
-					console.log(3);
-				});
-			},
-			error:function(textStatus,errorThrown){
-				
-			},
-			settings:function(){
 
-			}
-		},
-
-		"page3.php":{
-			route:function(response){
-				$(".contentt").html(response)
-				$("#ada").click(function(){
-					console.log(2);
-				});
+				$("#main_content").html(response);
+				var page = new form();
 			},
-			error:function(textStatus,errorThrown){
-				
-			},
-			settings:function(){
-
-			}
+		
+			
 		},
 
 		"default":{
 			route:function(response){
-				$(".contentt").html(response)
+				//$(".contentt").html(response)
 			},
-			error:function(textStatus,errorThrown){
-				
+			error:function(jqXHR,textStatus,errorThrown){
+				$("#main_content").html(jqXHR.responseText);
 			},
 		}
 	
@@ -73,13 +71,10 @@
 		
 	}
 
-	if ( typeof define === "function" && define.amd ) {
-		define( "myRouts", [], function() {
-			return myRouts;
-		});
-	}
+
 
 	return myRouts;
+
       	
 	
 })( jQuery, window, document );
