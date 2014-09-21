@@ -1,13 +1,16 @@
 <h1>Yourwayjs</h1>
-an easy plugin that let you build webapps with minimum guidlines how your app should be build
+a jquery plugin that let you build webapps easily
 
 <h2>Introduction</h2>
-Yourwayjs is an lightwight js library that make your website into  a webapp ,  without spending days or weaks on learning a new framework. this library is built for pepole who dont want to be bound to a sertain structe and wanna do things there own way.
-for exsample - many times we build small websites with low trafic and we preffer to build the hole application on the server time to save time. in today populr framworks they tell you to seprate between the server and the client side .  
+Yourwayjs is an lightwight js library that make your website into  a webapp ,  without spending days or weaks on learning a new framework. this library is built for pepole who dont want to be bound to a sertain structre and wanna do things their own way.
+for exsample - many times we build small websites with low trafic and we preffer to build the hole application on the server  to save time. in today populr framworks they tell you to seprate between the server and the client side .  
 in Yourwayjs you chose how things will happen without almost any restrictions
 
 <h1>Download</h1>
-press the download zip on the right corenr(:
+press the download zip on the right corner(:
+
+<h1>demo</h1>
+http://yourwayjs.pops.co.il/
 
 <h1>Getting started</h1>
 first of all we will need to load  some scripts 
@@ -35,7 +38,7 @@ new yourwayjs({
 	startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
 	stopPageSwitch:function(){},	// user function that happen after the page was renderd
 	defaultAjaxParams:{} ,          // your defult ajax params for every request
-	delay:0,			//set the delay time if use animation in startPageSwitch  and stopPageSwitch
+	delay:0,			//set the delay time when using animation in startPageSwitch  and stopPageSwitch
 
 });
 
