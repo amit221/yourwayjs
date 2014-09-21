@@ -189,60 +189,48 @@ myroutes is where you put your application logic for each page
 
 exsample for a router
 ```
-var myRouts = {
+	var myRouts = {
 
 		
-
-		"home":{
+		"page1":{
 			route:function(response){
 				
-				$(".contentt").html(response)
+				$("#main_content").html(response)
 			},
-			error:function(jqXHR,textStatus,errorThrown){
+			
+		},
+		"":{
+			route:function(response){
 				
+				myRouts.page1.route(response);
 			},
-			settings:function(){
-
-			}
+			
 		},
 
 		"page2":{
 			route:function(response){
 				
-				$(".contentt").html(response)
-				$("#adaa").click(function(){
-					console.log(3);
-				});
+				var page = new working_with_json(response);
+				$("#main_content").html( page.render());
 			},
-			error:function(jqXHR,textStatus,errorThrown){
+			error:function(textStatus,errorThrown){
 				
 			},
 			settings:function(){
-
-			}
-		},
-
-		"page3":{
-			route:function(response){
-				$(".contentt").html(myRouts.params.response)
-				$("#ada").click(function(){
-					console.log(2);
+				yourwayjs.setOneTimeAjaxParams({
+					dataType:"json"
 				});
-			},
-			error:function(jqXHR,textStatus,errorThrown){
-				
-			},
-			settings:function(){
-
 			}
 		},
+
+	
 
 		"default":{
 			route:function(response){
-				$(".contentt").html(response)
+				//$(".contentt").html(response)
 			},
 			error:function(jqXHR,textStatus,errorThrown){
-				
+				$("#main_content").html(jqXHR.responseText);
 			},
 		}
 	
