@@ -104,10 +104,10 @@
 				}
 				  var path = $a.attr('href');
 				 if(current_url != path.replace(yourwayjsOptions.url,'')){
-					 History.pushState(null, new Date().getTime(), path);
+					 History.pushState(null, null, path);
 				 }
 				 else{
-					 _instance.router(path);
+					 $(window).trigger('statechange');
 				 }
 				  event.preventDefault();
 				  return false;
@@ -127,15 +127,15 @@
 				request.data = $form.serializeObject();
 				if(path === undefined){
 					path = current_url;
+					History.pushState(null, null, path);
 				}
-				/*
-				if(path ===  undefined || path == yourwayjsOptions.url+"/"+current_url ){
-					path = yourwayjsOptions.url+"/"+current_url;
-					_instance.router(path);
-				} 
-				*/
 				
-				History.pushState(null, new Date().getTime(), path);
+				if(path ===  undefined || path == yourwayjsOptions.url+"/"+current_url || path == current_url){
+					$(window).trigger('statechange');
+				} 
+				
+				
+				
 				event.preventDefault();
 				return false;
 			});
@@ -220,7 +220,11 @@
 		this.router = function(url){
 			if(typeof(url) !== "undefined"){
 				var path=url;
-				History.pushState(null, new Date().getTime(), path);
+				if(url ==  page || url == yourwayjsOptions.url+"/"+current_url) {
+					$(window).trigger('statechange');
+					return;
+				}
+				History.pushState(null, null, path);
 				return;
 			}
 				
@@ -401,7 +405,7 @@
 		}
 */
 		this.setOneTimeAjaxParams = function(obj){
-			_instance.oneTimeAjaxParams = obj;
+			oneTimeAjaxParams = obj;
 		}
 
 		this.setDelay = function(d){
