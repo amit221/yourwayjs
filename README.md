@@ -2,7 +2,7 @@
 a jquery plugin that let you build webapps easily
 
 <h2>Introduction</h2>
-Yourwayjs is an lightwight js library that make your website into  a webapp ,  without spending days or weaks on learning a new framework. this library is built for pepole who dont want to be bound to a sertain structre and wanna do things their own way.
+Yourwayjs is a lightwight js library that make your website into  a webapp ,  without spending days or weaks on learning a new framework. this library is built for pepole who dont want to be bound to a sertain structre and wanna do things their own way.
 for exsample - many times we build small websites with low trafic and we preffer to build the hole application on the server  to save time. in today populr framworks they tell you to seprate between the server and the client side .  
 in Yourwayjs you chose how things will happen without almost any restrictions
 
