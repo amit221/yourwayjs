@@ -248,5 +248,5 @@ error:Whenever we get an error from the server, this function will be called( if
 settings:If you want to do things just before the ajax request happens, declare this function (this is a good place to use the
 yourwayjs.setOneTimeAjaxParams(object) function )
 ```
-you also must declare a default attribute in your object. Whenever the router goes to a page that is not declared in your object or the page doesnt have an error function it will go to the default functions.
+you also must declare a default attribute in your object. Whenever the router goes to a page that is not declared in your object or a page doesn't have an error function it will go to the default functions.
 
