@@ -8,13 +8,13 @@ In Yourwayjs you cohose how things will happen without almost any restrictions!
 It simply allows you to build your webapp your way!
 
 <h1>Download</h1>
-press the download zip on the right corner(:
+Press on the download zip button on the right corner(:
 
 <h1>demo</h1>
 <a href="http://yourwayjs.pops.co.il/" target='_blank' >live demo</a>
 
 <h1>Getting started</h1>
-first of all we will need to load  some scripts 
+First, we need to load some scripts: 
 
 ```
 <script src="yourpath/src/jquery-1.10.2.min.js"></script>
@@ -25,89 +25,89 @@ first of all we will need to load  some scripts
 <script src="yourpath/src/yourwayjs.js"></script>
 ```
 
-after we finished load all the script we can start haveing some fun.
-first lets create our app
+Now let's have some fun.
+First, we create our app:
 
 ```
 new yourwayjs({
 	url:"http://mywebsite.com" ,	// the base url of your webstie (requierd)
 	routs: myRouts,			// this is your routing logic . (requierd)
-	container:"",			// a jquery selctor for the main container of the page (requierd)
+	container:"",			// a jquery selector for the main container of the page (requierd)
       
-	onload:function(){} ,		// your own function when the plugin is finish to init,
-	startWithRout:true, 		// after init call the page that requested
-	startPageSwitch:function(){}, 	// user function that happen before the ajax request for the page  
-	stopPageSwitch:function(){},	// user function that happen after the page was renderd
+	onload:function(){} ,		// user function. Called when the plugin is finished loading
+	startWithRout:true, 		// after init, call the requested page
+	startPageSwitch:function(){}, 	// user function. Called before the ajax request for the page  
+	stopPageSwitch:function(){},	// user function. Called after the page was rendered
 	defaultAjaxParams:{} ,          // your defult ajax params for every request
-	delay:0,			//set the delay time when using animation in startPageSwitch  and stopPageSwitch
+	delay:0,			// sets the delay time when using animation in startPageSwitch  and stopPageSwitch
 
 });
 
 ```
-as you can see in the exsample above we have 3 required settings in the init and all other are optional
-lets focus on the routs and container for 1 sec.
-the routes get an boject that take all your routs, see the myrouts file to understand how this object shoud be built.
-the container is basically a jquery selector for your main content to be switched in each page change.
+There are only 3 required settings on intializing the plugin, all other settings are optional
+Now lets focus on the routes and the container.
+The routes get an object that take all your routes. See the myroutes file to understand how this object should be built.
+The container is basically a jquery selector for your main content to be switched in each page change.
 
-after we start the plugin all the a tags and forms will go as an ajax request to the server and send an additional paramter 
+After we start the plugin all the 'a' tags and forms will go as an ajax request to the server and the plugin sends an additional paramter. 
 ```
 ajax_req:'yourwayjs' 
 ```
-this way you can check on the server if its a yourwayjs request or a normal request.
+This way you can check on the server if the request is a yourwayjs request or a normal request.
 
 <h1>API</h1>
 
-so lets do a quick overview on what we can do with our functions
+So lets do a quick overview on what we can do with our functions
 
 <h3>router</h3>
-use this function if you want to route to url manually
+Use this function if you want to route to url manually
 
 ```
 yourwayjs.router(url);
 ```
 
 <h3>errors</h3>
-check if a variable meats your requirments and throw error id not(good for debug)
+Checks if a variable meats your requirments and throw error if not(good for debug)
 
 ```
 yourwayjs.error(variable,Array(arg))
 ```
 
-posiable arguments:
+Optional arguments:
 ```
 string 	 : check if the variable is a string
-undefined: check if the variable is a undefined
-required : check if the variable is a is emptey (works for array and strings)
-array    : check if the variable is array
-object	 : check if the variable is object
-global	 : check if the variable is global variable
+undefined: check if the variable is undefined
+required : check if the variable is emptey (works for array and strings)
+array    : check if the variable is an array
+object	 : check if the variable is an object
+global	 : check if the variable is a global variable
 ```
 
 <h3>getUrl</h3>
-returns the currnt path after the host name without paramters that comes after ?
+Returns the current path after the host name without paramters that comes after "?"
 
 ```
 yourwayjs.getUrl()
 ```
 
-exsample:
-for this url "http://mywebsite.com/projects/project1?p=1&p2=2"
-the function will return "projects/project1"
+Example:
+For this url "http://mywebsite.com/projects/project1?p=1&p2=2"
+The function will return "projects/project1"
 
 <h3>getPage</h3>
-return the current page 
+Returns the current page 
 
 ```
 yourwayjs.getPage()
 ```
 
-exsample:
-for this url "http://mywebsite.com/projects/project1?p=1&p2=2"
-the function will return "projects"
+Example:
+For this url "http://mywebsite.com/projects/project1?p=1&p2=2"
+The function will return "projects"
 
 
 <h3>noAnimation</h3>
-if you want to diable page animation for a page call this function
+If you want to disable page animation for a certain page call this function
 
 ```
 yourwayjs.noAnimation();
@@ -115,7 +115,7 @@ yourwayjs.noAnimation();
 
 
 <h3>setOneTimeAjaxParams</h3>
-in your router object you might wanna change the ajax options . use this function in the router page settings to do so
+In your router object you might want to change the ajax options. Use this function in the router page settings to do so.
 
 ```
 yourwayjs.setOneTimeAjaxParams(object);
@@ -123,21 +123,21 @@ yourwayjs.setOneTimeAjaxParams(object);
 
 
 <h3>on</h3>
-use this function when you want do add an on event on a selctor outside the main container  that will work only on the current page
+Use this function when you want do add an "on event" on a selector outside the main container. The "on event" will work only on the current page
 
 ```
 yourwayjs.on(jquery selector,event,func)
 ```
 
 <h3>off</h3>
-use this function when you want manually off an event
+Use this function when you want manually off an event.
 
 ```
 yourwayjs.off(jquery selector)
 ```
 
 <h3>bind</h3>
-use this function when you want do add an bind event on a selctor outside the main container  that will work only on the current page
+Use this function when you want do add an "bind event" on a selector outside the main container. The "bind event" will work only on the current page.
 
 
 ```
@@ -145,50 +145,50 @@ yourwayjs.bind(jquery selector,event,func)
 ```
 
 <h3>unbind</h3>
-use this function when you want manually unbind an event
+Use this function when you want manually unbind an event.
 
 ```
 yourwayjs.unbind(jquery selector)
 ```
 <h3>addGlobals</h3>
-adding a global variable that will live only on the current page
+Adding a global variable that will live only on the current page.
 
 ```
 yourwayjs.addGlobals(name,value)
 ```
 
 <h3>removeGlobals</h3>
-manually remove all the global variables that you define with addGlobals
-(this methoed is called  before any routing to other page )
+Manually removes all the global variables that you defined with addGlobals.
+(this method is called  before any routing to other page )
 
 ```
 yourwayjs.removeGlobals()
 ```
 
 <h3>addPlugin</h3>
-register the plugin destory method 
+Register the plugin destory method 
 
 ```
 yourwayjs.addPlugin(destoryFunc)
 ```
 
-exsample : 
+Example : 
 ```
 yourwayjs.addPlugin(function(){$( "selctor" ).draggable("destroy");})
 ```
 
 <h3>deletePlugins</h3>
-manually delete all the registerted plugins
-(this methoed is called  before any routing to other page )
+Manually deletes all the registerted plugins
+(this method is called  before any routing to other page )
 
 ```
 yourwayjs.deletePlugins()
 ```
 
 <h1>myrouts</h1>
-myroutes is where you put your application logic for each page
+In the myroutes put your application logic for each page
 
-exsample for a router
+Example for a router
 ```
 	var myRouts = {
 
@@ -241,12 +241,12 @@ exsample for a router
 ```
 
 lets review what we have here.
-on the first level we put the page name and create and object for it with the following attributs
+On the first level we put the page name and create and object for it with the following attributes
 ```
-route:this function called after we get the respone for the server (u must declare a route function for each page you declare)
-error:when ever we got an error from the server will come to this function( if this function is not declared it will go to the default error function)
-settings:if you wanna do things just before the ajax request happens declare this function (this is a good place to use the
+route:This function is called after you get the response from the server (you must declare a route function for each page you declare)
+error:Whenever we get an error from the server, this function will be called( if this function is not declared it will go to the default error function)
+settings:If you want to do things just before the ajax request happens, declare this function (this is a good place to use the
 yourwayjs.setOneTimeAjaxParams(object) function )
 ```
-you olso must declare a default attribute in your object. whenever the router go to a page that is not declared in your object or the page doesnt have an error function it will go to the default function
+you also must declare a default attribute in your object. Whenever the router goes to a page that is not declared in your object or the page doesnt have an error function it will go to the default functions.
 
